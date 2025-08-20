@@ -10,14 +10,20 @@ const OnboardLayout = () => {
 					headerShown: false,
 				}}
 			/>
-			{/* <Stack.Screen
-				name="found"
+			<Stack.Screen
+				name="productSelect"
 				options={{
 					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="search"
+				options={{
+					headerShown: false,
+				}}
+			/>
+			<Stack.Screen
+				name="found"
 				options={{
 					headerShown: false,
 				}}
@@ -33,7 +39,7 @@ const OnboardLayout = () => {
 				options={{
 					headerShown: false,
 				}}
-			/> */}
+			/>
 		</Stack>
 	);
 };

@@ -1,6 +1,5 @@
 export const brandsData = [
 	{
-		id: 0,
 		name: "Sagney",
 		logoUrl: require("../../assets/images/sagney-logo.png"),
 		products: [
@@ -27,14 +26,13 @@ export const brandsData = [
 				},
 			},
 		],
+		supportLink: "https://www.google.com",
 	},
 	{
-		id: 1,
 		name: "Brand 2",
 		logoUrl: require("../../assets/images/brand1-logo.png"),
 	},
 	{
-		id: 2,
 		name: "Brand 3",
 		logoUrl: require("../../assets/images/brand2-logo.png"),
 	},

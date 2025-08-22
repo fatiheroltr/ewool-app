@@ -14,7 +14,7 @@ import {
 import PairIcon from "../../assets/images/pair-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
-import { brandsData } from "../Utils/brandsData";
+import { brandsData } from "../utils/brandsData";
 
 export default function Search() {
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
@@ -66,37 +66,6 @@ export default function Search() {
 		<View style={styles.wrapper}>
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
-				{/* <View style={styles.headerWrapper}>
-					<View style={styles.headerContainer}>
-						<TouchableOpacity
-							style={styles.headerButton}
-							onPress={() => {
-								router.back();
-							}}
-						>
-							<BackArrow />
-						</TouchableOpacity>
-						<Logo style={{ width: 27, height: 33 }} />
-						<View style={styles.headerButton}></View>
-					</View>
-					<View style={styles.textContainer}>
-						<Text style={styles.brandName}>
-							{brandsData[selectedBrandId].name}
-						</Text>
-						<Text style={styles.title}>Searching for new products</Text>
-						<Text style={styles.paragraph}>
-							Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus
-							enim lectus.
-						</Text>
-					</View>
-					<View style={styles.stepsContainer}>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.step}></View>
-						<View style={styles.step}></View>
-					</View>
-				</View> */}
 				<Header
 					title="Searching for new products"
 					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."

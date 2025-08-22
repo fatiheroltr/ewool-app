@@ -1,6 +1,5 @@
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
 import {
 	Image,
 	Platform,
@@ -14,94 +13,15 @@ import NextIcon from "../../assets/images/next-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../Utils/brandsData";
+import { brandsData } from "../utils/brandsData";
 
 export default function Success() {
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
-	const navigation = useNavigation();
-	const [knownDevices, setKnownDevices] = useState([
-		{
-			id: "1",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 1",
-			productImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: true,
-		},
-		{
-			id: "2",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 2",
-			productImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: false,
-		},
-		{
-			id: "3",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 3",
-			productImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: false,
-		},
-	]);
 
 	return (
 		<View style={styles.wrapper}>
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
-				{/* <View style={styles.headerWrapper}>
-					<View style={styles.headerContainer}>
-						<TouchableOpacity
-							style={styles.headerButton}
-							onPress={() => {
-								router.push("../");
-							}}
-						>
-							<BackArrow />
-						</TouchableOpacity>
-						<Logo style={{ width: 27, height: 33 }} />
-						<View style={styles.headerButton}></View>
-					</View>
-					<View style={styles.textContainer}>
-						<Text style={styles.title}>Successfully paired</Text>
-						<Text style={styles.paragraph}>
-							Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus
-							enim lectus.
-						</Text>
-					</View>
-					<View style={styles.stepsContainer}>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-					</View>
-				</View> */}
 				<Header
 					title="Successfully paired"
 					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
@@ -120,14 +40,24 @@ export default function Success() {
 					<TouchableOpacity
 						style={styles.button}
 						onPress={() => {
-							navigation.navigate("device/[id]", {
-								id: selectedBrandId,
-								modelName: knownDevices[selectedBrandId].modelName,
-								gender: knownDevices[selectedBrandId].gender,
-								productImageUrl: knownDevices[selectedBrandId].productImageUrl,
-								headerImageUrl: knownDevices[selectedBrandId].headerImageUrl,
-								brand: knownDevices[selectedBrandId].brand,
-							});
+							router.push(
+								`/device/${selectedBrandId}?` +
+									`modelName=${encodeURIComponent(
+										brandsData[selectedBrandId].products[selectedProductId].name
+									)}&` +
+									`gender=${gender}&` +
+									`productImageUrl=${encodeURIComponent(
+										brandsData[selectedBrandId].products[selectedProductId]
+											.productImageUrl[gender]
+									)}&` +
+									`headerImageUrl=${encodeURIComponent(
+										brandsData[selectedBrandId].products[selectedProductId]
+											.headerImageUrl[gender]
+									)}&` +
+									`brand=${encodeURIComponent(
+										brandsData[selectedBrandId].name
+									)}`
+							);
 						}}
 					>
 						<Text style={styles.buttonLabel}>Go to product</Text>

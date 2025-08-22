@@ -16,7 +16,7 @@ export default function Header({
 	return (
 		<View style={styles.headerWrapper}>
 			<View style={styles.headerContainer}>
-				{backButton && (
+				{backButton ? (
 					<TouchableOpacity
 						style={styles.headerButton}
 						onPress={() => {
@@ -25,6 +25,8 @@ export default function Header({
 					>
 						<BackArrow />
 					</TouchableOpacity>
+				) : (
+					<View style={styles.headerButton}></View>
 				)}
 				<Logo style={{ width: 27, height: 33 }} />
 				<View style={styles.headerButton}></View>

@@ -1,7 +1,10 @@
+"use client";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	Image,
 	Linking,
@@ -26,77 +29,88 @@ import DeleteIcon from "../assets/images/remove-icon.svg";
 import ScreenBackground from "../assets/images/screen-back.svg";
 import SettingsIcon from "../assets/images/settings-icon.svg";
 import SupportIcon from "../assets/images/support-icon.svg";
+import { brandsData } from "./utils/brandsData";
 
 const products = () => {
 	const actionSheetRefs = useRef({});
-	const navigation = useNavigation();
 	const swipeListViewRef = useRef(null);
-	const [deviceToRename, setDeviceToRename] = useState(null);
-	const [deviceToDelete, setDeviceToDelete] = useState(null);
-	const [newDeviceName, setNewDeviceName] = useState("");
-	const [knownDevices, setKnownDevices] = useState([
-		{
-			id: "1",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 1",
-			productImageUrl: {
-				men: require("../assets/images/sagney-puffer-jacket-men.png"),
-				women: require("../assets/images/sagney-puffer-jacket-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: true,
-		},
-		{
-			id: "2",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 2",
-			productImageUrl: {
-				men: require("../assets/images/sagney-puffer-jacket-men.png"),
-				women: require("../assets/images/sagney-puffer-jacket-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: false,
-		},
-		{
-			id: "3",
-			brand: "Sagney",
-			modelName: "Puffer Jacket 3",
-			productImageUrl: {
-				men: require("../assets/images/sagney-puffer-jacket-men.png"),
-				women: require("../assets/images/sagney-puffer-jacket-women.png"),
-			},
-			headerImageUrl: {
-				men: require("../assets/images/heatlover-puffer-jacket-model-men.png"),
-				women: require("../assets/images/heatlover-puffer-jacket-model-women.png"),
-			},
-			gender: "men",
-			supportLink: "https://www.google.com",
-			connected: false,
-		},
-	]);
+	const [productToRename, setProductToRename] = useState(null);
+	const [productToDelete, setProductToDelete] = useState(null);
+	const [newProductName, setNewProductName] = useState("");
+	const [knownDevices, setKnownDevices] = useState([]);
 
-	const handleDeleteDevice = (id: string | null) => {
-		setDeviceToDelete(null);
-		setKnownDevices(knownDevices.filter((device) => device.id !== id));
+	const handleRenameDevice = (deviceIndex: number | null, newName: string) => {
+		if (deviceIndex === null) return;
+
+		setKnownDevices((prev) => {
+			const updated = prev.map((device, i) => {
+				if (i === deviceIndex) {
+					brandsData[device.brandId].products[device.productId].name = newName;
+					return { ...device };
+				}
+				return device;
+			});
+
+			AsyncStorage.setItem("@knownDevices", JSON.stringify(updated)).catch(
+				(err) => console.error("Failed to save renamed device:", err)
+			);
+
+			return updated;
+		});
+
+		setProductToRename(null);
 	};
 
-	const handleRenameDevice = (id: string | null) => {
-		setDeviceToRename(null);
-		setKnownDevices(
-			knownDevices.map((device) =>
-				device.id === id ? { ...device, modelName: newDeviceName } : device
-			)
-		);
+	const handleDeleteDevice = async (index: number | null) => {
+		if (index === null) return;
+
+		setKnownDevices((prev) => {
+			const updated = prev.filter((_, i) => i !== index);
+
+			AsyncStorage.setItem("@knownDevices", JSON.stringify(updated)).catch(
+				(err) => console.error("Failed to delete device:", err)
+			);
+
+			return updated;
+		});
+
+		setProductToDelete(null);
+	};
+
+	useEffect(() => {
+		// clearAsync();
+
+		const loadKnownDevices = async () => {
+			try {
+				const storedDevices = await AsyncStorage.getItem("@knownDevices");
+				const devicesArray = storedDevices ? JSON.parse(storedDevices) : [];
+				setKnownDevices(devicesArray);
+
+				// Navigate to onboarding if empty
+				if (devicesArray.length === 0) {
+					router.push(`/onboarding?devicesCount=${devicesArray.length}`);
+				}
+			} catch (error) {
+				console.error("Failed to load devices:", error);
+			}
+		};
+
+		loadKnownDevices();
+	}, [knownDevices.length]);
+
+	const clearAsync = async (index) => {
+		try {
+			const stored = await AsyncStorage.getItem("@knownDevices");
+			if (!stored) return;
+
+			const devices = JSON.parse(stored);
+			devices.splice(index, 1); // remove the device at the given index
+
+			await AsyncStorage.setItem("@knownDevices", JSON.stringify(devices));
+			console.log("Device deleted successfully");
+		} catch (error) {
+			console.error("Failed to delete device:", error);
+		}
 	};
 
 	return (
@@ -110,38 +124,42 @@ const products = () => {
 					paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
 				}}
 			>
-				<Dialog.Container visible={!!deviceToRename}>
+				<Dialog.Container
+					visible={productToRename !== null && productToRename !== undefined}
+				>
 					<Dialog.Title>Rename this</Dialog.Title>
 					<Dialog.Description>rename paragraph</Dialog.Description>
 					<Dialog.Input
 						placeholder={
-							deviceToRename
-								? knownDevices.find((device) => device.id === deviceToRename)
-										?.modelName
-								: ""
+							brandsData[knownDevices[productToRename]?.brandId]?.products?.[
+								knownDevices[productToRename]?.productId
+							]?.name
 						}
-						onChangeText={setNewDeviceName}
-						value={newDeviceName}
+						onChangeText={setNewProductName}
+						value={newProductName}
 						style={{ color: "black" }}
 					/>
 					<Dialog.Button
 						label="Cancel"
 						onPress={() => {
-							setDeviceToRename(null);
-							setNewDeviceName("");
+							setProductToRename(null);
+							setNewProductName("");
 						}}
 					/>
 					<Dialog.Button
 						label="Save"
-						onPress={() => handleRenameDevice(deviceToRename)}
+						onPress={() => handleRenameDevice(productToRename, newProductName)}
 					/>
 				</Dialog.Container>
-				<Dialog.Container visible={!!deviceToDelete}>
+				<Dialog.Container
+					visible={productToDelete !== null && productToDelete !== undefined}
+				>
 					<Dialog.Title>
 						Delete{" "}
 						{
-							knownDevices.find((device) => device.id === deviceToDelete)
-								?.modelName
+							brandsData[knownDevices[productToDelete]?.brandId]?.products?.[
+								knownDevices[productToDelete]?.productId
+							]?.name
 						}
 					</Dialog.Title>
 					<Dialog.Description>
@@ -150,12 +168,12 @@ const products = () => {
 					<Dialog.Button
 						label="Cancel"
 						onPress={() => {
-							setDeviceToDelete(null);
+							setProductToDelete(null);
 						}}
 					/>
 					<Dialog.Button
 						label="Delete"
-						onPress={() => handleDeleteDevice(deviceToDelete)}
+						onPress={() => handleDeleteDevice(productToDelete)}
 					/>
 				</Dialog.Container>
 				<StatusBar style="light" />
@@ -176,19 +194,33 @@ const products = () => {
 					style={{ paddingHorizontal: 26, marginTop: 12 }}
 					ref={swipeListViewRef}
 					data={knownDevices}
-					keyExtractor={(item) => item.id.toString()}
+					keyExtractor={(item, index) => index}
 					renderItem={(rowData, rowMap) => (
 						<Pressable
 							onPress={() => {
 								rowData.item.connected &&
-									navigation.navigate(`device/[id]`, {
-										id: rowData.item.id,
-										modelName: rowData.item.modelName,
-										gender: rowData.item.gender,
-										productImageUrl: rowData.item.productImageUrl,
-										headerImageUrl: rowData.item.headerImageUrl,
-										brand: rowData.item.brand,
-									});
+									router.push(
+										`/device/${rowData.item.id}?` +
+											`modelName=${encodeURIComponent(
+												brandsData[rowData.item.brandId].products[
+													rowData.item.productId
+												].name
+											)}&` +
+											`gender=${rowData.item.gender}&` +
+											`productImageUrl=${encodeURIComponent(
+												brandsData[rowData.item.brandId].products[
+													rowData.item.productId
+												].productImageUrl[rowData.item.gender]
+											)}&` +
+											`headerImageUrl=${encodeURIComponent(
+												brandsData[rowData.item.brandId].products[
+													rowData.item.productId
+												].headerImageUrl[rowData.item.gender]
+											)}&` +
+											`brand=${encodeURIComponent(
+												brandsData[rowData.item.brandId].name
+											)}`
+									);
 							}}
 							style={{
 								zIndex: 2,
@@ -222,7 +254,9 @@ const products = () => {
 									}}
 									source={
 										rowData.item.gender &&
-										rowData.item.productImageUrl[rowData.item.gender]
+										brandsData[rowData.item.brandId]?.products?.[
+											rowData.item.productId
+										]?.productImageUrl?.[rowData.item.gender]
 									}
 								/>
 								<View>
@@ -233,7 +267,9 @@ const products = () => {
 											fontSize: 12,
 										}}
 									>
-										{rowData.item.brand}
+										{rowData.item.newProductName
+											? rowData.item.newProductName
+											: brandsData[rowData.item.brandId]?.name}
 									</Text>
 									<Text
 										style={{
@@ -242,7 +278,11 @@ const products = () => {
 											fontSize: 12,
 										}}
 									>
-										{rowData.item.modelName}
+										{
+											brandsData[rowData.item.brandId]?.products?.[
+												rowData.item.productId
+											]?.name
+										}
 									</Text>
 								</View>
 							</View>
@@ -276,7 +316,7 @@ const products = () => {
 						>
 							<Pressable
 								onPress={() => {
-									actionSheetRefs.current[rowData.item.id]?.show();
+									actionSheetRefs.current[rowData.index]?.show();
 								}}
 								style={{
 									width: 80,
@@ -307,9 +347,9 @@ const products = () => {
 				</View>
 			</SafeAreaView>
 			{knownDevices.map((device, index) => (
-				<View key={device.id}>
+				<View key={index}>
 					<ActionSheet
-						ref={(ref) => (actionSheetRefs.current[device.id] = ref)}
+						ref={(ref) => (actionSheetRefs.current[index] = ref)}
 						overlayColor="#101820"
 						defaultOverlayOpacity={0.85}
 						onClose={() => swipeListViewRef.current?.closeAllOpenRows()}
@@ -342,7 +382,9 @@ const products = () => {
 								>
 									<Image
 										source={
-											device.gender && device.productImageUrl[device.gender]
+											device.gender &&
+											brandsData[device.brandId]?.products?.[device.productId]
+												?.productImageUrl?.[device.gender]
 										}
 										style={{
 											width: 100,
@@ -365,7 +407,7 @@ const products = () => {
 												fontSize: 14,
 											}}
 										>
-											{device.brand}
+											{brandsData[device.brandId]?.name}
 										</Text>
 										<Text
 											style={{
@@ -374,7 +416,10 @@ const products = () => {
 												fontSize: 14,
 											}}
 										>
-											{device.modelName}
+											{
+												brandsData[device.brandId]?.products?.[device.productId]
+													?.name
+											}
 										</Text>
 									</View>
 								</View>
@@ -401,15 +446,25 @@ const products = () => {
 								}}
 							>
 								<TouchableOpacity
-									onPress={() =>
-										setKnownDevices(
-											knownDevices.map((item) =>
-												item.id === device.id
+									onPress={() => {
+										setKnownDevices((prev) => {
+											const updated = prev.map((item) =>
+												item.brandId === device.brandId &&
+												item.productId === device.productId
 													? { ...item, gender: "men" }
 													: item
-											)
-										)
-									}
+											);
+
+											AsyncStorage.setItem(
+												"@knownDevices",
+												JSON.stringify(updated)
+											).catch((err) =>
+												console.error("Failed to update gender:", err)
+											);
+
+											return updated;
+										});
+									}}
 									style={{
 										flex: 1,
 										backgroundColor:
@@ -432,15 +487,25 @@ const products = () => {
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
-									onPress={() =>
-										setKnownDevices(
-											knownDevices.map((item) =>
-												item.id === device.id
+									onPress={() => {
+										setKnownDevices((prev) => {
+											const updated = prev.map((item) =>
+												item.brandId === device.brandId &&
+												item.productId === device.productId
 													? { ...item, gender: "women" }
 													: item
-											)
-										)
-									}
+											);
+
+											AsyncStorage.setItem(
+												"@knownDevices",
+												JSON.stringify(updated)
+											).catch((err) =>
+												console.error("Failed to update gender:", err)
+											);
+
+											return updated;
+										});
+									}}
 									style={{
 										flex: 1,
 										backgroundColor:
@@ -475,9 +540,9 @@ const products = () => {
 							>
 								<TouchableOpacity
 									onPress={() => {
-										actionSheetRefs.current[device.id]?.hide();
+										actionSheetRefs.current[index]?.hide();
 										setTimeout(() => {
-											setDeviceToDelete(device.id);
+											setProductToDelete(index);
 										}, 200);
 									}}
 									style={{
@@ -496,9 +561,9 @@ const products = () => {
 								</TouchableOpacity>
 								<TouchableOpacity
 									onPress={() => {
-										actionSheetRefs.current[device.id]?.hide();
+										actionSheetRefs.current[index]?.hide();
 										setTimeout(() => {
-											setDeviceToRename(device.id);
+											setProductToRename(index);
 										}, 200);
 									}}
 									style={{
@@ -528,9 +593,11 @@ const products = () => {
 								}}
 							>
 								<TouchableOpacity
-									onPress={() => {
-										Linking.openURL(device.supportLink);
-									}}
+									onPress={() =>
+										Linking.openURL(
+											brandsData[device.brandId]?.supportLink ?? ""
+										)
+									}
 									style={{
 										flex: 1,
 										padding: 18,

@@ -1,5 +1,4 @@
-import { useRoute } from "@react-navigation/native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
@@ -20,9 +19,8 @@ import SettingsIcon from "../../assets/images/settings-icon.svg";
 
 const index = () => {
 	const router = useRouter();
-	const route = useRoute();
-	const { id, modelName, productImageUrl, headerImageUrl, gender, brand } =
-		route.params;
+	const { id, modelName, headerImageUrl, gender, brand } =
+		useLocalSearchParams();
 	let tempUnit = "c";
 	let currentValue = 44;
 	const [targetValue, setTargetValue] = useState(50);
@@ -42,9 +40,6 @@ const index = () => {
 	return (
 		<View style={styles.container}>
 			<StatusBar style="light" />
-			{/* <SafeAreaView>
-                <Text style={{ color: "#fff" }}>SAFE AREA</Text>
-            </SafeAreaView> */}
 			<View style={styles.productContainer}>
 				<Amblem style={styles.amblem} />
 				<View style={styles.productInfo}>
@@ -52,10 +47,7 @@ const index = () => {
 					<Text style={styles.modelName}>{modelName}</Text>
 				</View>
 				<View style={styles.productImageContainer}>
-					<Image
-						style={styles.productImage}
-						source={gender && headerImageUrl[gender]}
-					/>
+					<Image style={styles.productImage} source={headerImageUrl} />
 					<DeviceImageBackground
 						width="100%"
 						height="100%"

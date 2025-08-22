@@ -14,7 +14,7 @@ import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
 import PillButton from "../../components/ui/PillButton";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../Utils/brandsData";
+import { brandsData } from "../utils/brandsData";
 
 export default function ProductSelect() {
 	const { selectedBrandId, gender, selectedProductIdParam } =
@@ -72,37 +72,6 @@ export default function ProductSelect() {
 		<View style={styles.wrapper}>
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
-				{/* <View style={styles.headerWrapper}>
-					<View style={styles.headerContainer}>
-						<TouchableOpacity
-							style={styles.headerButton}
-							onPress={() => {
-								router.back();
-							}}
-						>
-							<BackArrow />
-						</TouchableOpacity>
-						<Logo style={{ width: 27, height: 33 }} />
-						<View style={styles.headerButton}></View>
-					</View>
-					<View style={styles.textContainer}>
-						<Text style={styles.brandName}>
-							{brandsData[selectedBrandId]?.name}
-						</Text>
-						<Text style={styles.title}>Select the product</Text>
-						<Text style={styles.paragraph}>
-							Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus
-							enim lectus.
-						</Text>
-					</View>
-					<View style={styles.stepsContainer}>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.step}></View>
-						<View style={styles.step}></View>
-						<View style={styles.step}></View>
-					</View>
-				</View> */}
 				<Header
 					title="Select the product"
 					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."

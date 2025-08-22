@@ -1,4 +1,5 @@
 import PillButton from "@/components/ui/PillButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
@@ -19,11 +20,11 @@ import CheckIcon from "../../assets/images/check-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../Utils/brandsData";
+import { brandsData } from "../utils/brandsData";
 
 export default function Found() {
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
-	const [selectedFoundProductId, setSelectedFoundProductId] = useState(null);
+	const [foundProductId, setFoundProductId] = useState(null);
 	const [showConfirm, setShowConfirm] = useState(false);
 	const duration = 15;
 	const [timeLeft, setTimeLeft] = useState(duration);
@@ -46,7 +47,7 @@ export default function Found() {
 			showConfirm &&
 				setTimeLeft((prev) => {
 					if (prev === 0) {
-						setSelectedFoundProductId(null);
+						setFoundProductId(null);
 						setShowConfirm(false);
 						actionSheetRef.current?.hide();
 						setTimeout(duration);
@@ -59,53 +60,34 @@ export default function Found() {
 		return () => clearInterval(timer);
 	}, [showConfirm, duration]);
 
-	// useEffect(() => {
-	// 	showConfirm && actionSheetRef.current?.show();
-	// }, [showConfirm, actionSheetRef]);
-
 	const handleShowConfirm = () => {
 		setShowConfirm(true);
 		actionSheetRef.current?.show();
+	};
+
+	const handleSaveProduct = async (
+		selectedBrandId,
+		selectedProductId,
+		gender
+	) => {
+		const newDevice = {
+			brandId: Number(selectedBrandId),
+			productId: Number(selectedProductId),
+			newProductName: "",
+			gender: gender,
+			connected: true,
+		};
+
+		const storedDevices = await AsyncStorage.getItem("@knownDevices");
+		const devicesArray = storedDevices ? JSON.parse(storedDevices) : [];
+		devicesArray.push(newDevice);
+		await AsyncStorage.setItem("@knownDevices", JSON.stringify(devicesArray));
 	};
 
 	return (
 		<View style={styles.wrapper}>
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
-				{/* <View style={styles.headerWrapper}>
-					<View style={styles.headerContainer}>
-						<TouchableOpacity
-							style={styles.headerButton}
-							onPress={() => {
-								router.push({
-									pathname: "/onboarding/productSelect",
-									params: { selectedBrandId, gender },
-								});
-							}}
-						>
-							<BackArrow />
-						</TouchableOpacity>
-						<Logo style={{ width: 27, height: 33 }} />
-						<View style={styles.headerButton}></View>
-					</View>
-					<View style={styles.textContainer}>
-						<Text style={styles.brandName}>
-							{brandsData[selectedBrandId]?.name}
-						</Text>
-						<Text style={styles.title}>1 new product found</Text>
-						<Text style={styles.paragraph}>
-							Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus
-							enim lectus.
-						</Text>
-					</View>
-					<View style={styles.stepsContainer}>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.stepActive}></View>
-						<View style={styles.step}></View>
-					</View>
-				</View> */}
 				<Header
 					title={`${foundDevicesLength} new product${
 						foundDevicesLength > 1 ? "s" : ""
@@ -119,14 +101,13 @@ export default function Found() {
 				<View style={styles.foundContainer}>
 					<TouchableOpacity
 						onPress={() => {
-							selectedFoundProductId === null
-								? setSelectedFoundProductId(0)
-								: setSelectedFoundProductId(null);
+							foundProductId === null
+								? setFoundProductId(0)
+								: setFoundProductId(null);
 						}}
 						style={{
 							zIndex: 2,
-							backgroundColor:
-								selectedFoundProductId !== null ? "#EAECEF" : "#93979D",
+							backgroundColor: foundProductId !== null ? "#EAECEF" : "#93979D",
 							borderRadius: 8,
 							display: "flex",
 							flexDirection: "row",
@@ -193,11 +174,7 @@ export default function Found() {
 								justifyContent: "center",
 							}}
 						>
-							{selectedFoundProductId === null ? (
-								<BluetoothIcon />
-							) : (
-								<CheckIcon />
-							)}
+							{foundProductId === null ? <BluetoothIcon /> : <CheckIcon />}
 						</View>
 					</TouchableOpacity>
 				</View>
@@ -205,7 +182,7 @@ export default function Found() {
 					<PillButton
 						label="Pair"
 						icon="pair"
-						disabled={selectedFoundProductId === null}
+						disabled={foundProductId === null}
 						func={handleShowConfirm}
 					/>
 					<TextButton
@@ -220,7 +197,7 @@ export default function Found() {
 				overlayColor="#101820"
 				defaultOverlayOpacity={0.85}
 				onClose={() => {
-					setSelectedFoundProductId(null);
+					setFoundProductId(null);
 					setShowConfirm(false);
 					setTimeLeft(duration);
 				}}
@@ -318,6 +295,7 @@ export default function Found() {
 					>
 						<Pressable
 							onPress={() => {
+								handleSaveProduct(selectedBrandId, selectedProductId, gender);
 								actionSheetRef.current?.hide();
 								setShowConfirm(false);
 								setTimeLeft(duration);

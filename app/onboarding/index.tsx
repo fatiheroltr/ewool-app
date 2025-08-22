@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, Platform, SafeAreaView, StyleSheet, View } from "react-native";
@@ -6,9 +7,10 @@ import CarouselSelector from "../../components/ui/CarouselSelector";
 import Header from "../../components/ui/Header";
 import PillButton from "../../components/ui/PillButton";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../Utils/brandsData";
+import { brandsData } from "../utils/brandsData";
 
 export default function HomeScreen() {
+	const { devicesCount } = useLocalSearchParams();
 	const [selectedBrandId, setSelectedBrandId] = useState(null);
 
 	const brands = brandsData.map((brand, index) => {
@@ -26,7 +28,7 @@ export default function HomeScreen() {
 				<Header
 					title="Select the brand"
 					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
-					backButton={true}
+					backButton={false}
 					steps={5}
 					currStep={1}
 					brandName={undefined}
@@ -44,7 +46,11 @@ export default function HomeScreen() {
 						icon="arrow"
 						disabled={selectedBrandId === null}
 					/>
-					<TextButton link="/" label="Back to known products" />
+					<TextButton
+						link="/"
+						label="Back to known products"
+						disabled={devicesCount === undefined ? false : true}
+					/>
 				</View>
 			</SafeAreaView>
 			<ScreenBackground

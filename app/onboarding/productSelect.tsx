@@ -2,6 +2,7 @@ import CarouselSelector from "@/components/ui/CarouselSelector";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Image,
 	Platform,
@@ -17,6 +18,8 @@ import TextButton from "../../components/ui/TextButton";
 import { brandsData } from "../utils/brandsData";
 
 export default function ProductSelect() {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const { selectedBrandId, gender, selectedProductIdParam } =
 		useLocalSearchParams();
 	const [selectedProductId, setSelectedProductId] = useState(null);
@@ -73,8 +76,8 @@ export default function ProductSelect() {
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
 				<Header
-					title="Select the product"
-					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
+					title={t("onboarding.selectProduct.title")}
+					paragraph={t("onboarding.selectProduct.p")}
 					backButton={true}
 					steps={5}
 					currStep={2}
@@ -109,7 +112,8 @@ export default function ProductSelect() {
 								lineHeight: 20,
 							}}
 						>
-							No products found for {`\n`}
+							{t("onboarding.selectProduct.notFound")}
+							{`\n`}
 							<Text
 								style={{ fontWeight: "bold", fontSize: 16, lineHeight: 24 }}
 							>
@@ -121,13 +125,13 @@ export default function ProductSelect() {
 				<View>
 					<PillButton
 						link={`/onboarding/search?selectedBrandId=${selectedBrandId}&selectedProductId=${selectedProductId}&gender=${gender}`}
-						label="Search"
+						label={t("onboarding.selectProduct.primaryButton")}
 						icon="arrow"
 						disabled={selectedProductId === null}
 					/>
 					<TextButton
 						link="/onboarding"
-						label="Change the brand"
+						label={t("onboarding.selectProduct.secondaryButton")}
 						direction="back"
 					/>
 				</View>

@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Animated,
 	Easing,
@@ -17,6 +18,8 @@ import Header from "../../components/ui/Header";
 import { brandsData } from "../utils/brandsData";
 
 export default function Search() {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
 	const rotation = useRef(new Animated.Value(0)).current;
 	const [countdown, setCountdown] = useState(15);
@@ -67,8 +70,8 @@ export default function Search() {
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
 				<Header
-					title="Searching for new products"
-					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
+					title={t("onboarding.search.title")}
+					paragraph={t("onboarding.search.p")}
 					backButton={true}
 					steps={5}
 					currStep={3}

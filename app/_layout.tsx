@@ -1,3 +1,4 @@
+import "@/i18n";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import { Text, TextInput } from "react-native";

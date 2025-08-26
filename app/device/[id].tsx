@@ -1,6 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Image,
 	Platform,
@@ -18,6 +19,8 @@ import ScreenBackground from "../../assets/images/screen-back.svg";
 import SettingsIcon from "../../assets/images/settings-icon.svg";
 
 const index = () => {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const router = useRouter();
 	const { id, modelName, headerImageUrl, gender, brand } =
 		useLocalSearchParams();
@@ -59,7 +62,7 @@ const index = () => {
 				<View style={styles.sliderContentContainer}>
 					<View style={styles.currentTempContainer}>
 						<Text style={styles.currentTemp}>
-							current {checkUnit(currentValue)}°
+							{t("current", { currentTempValue: checkUnit(currentValue) })}
 						</Text>
 					</View>
 					<Image
@@ -73,7 +76,7 @@ const index = () => {
 							{checkUnit(targetValue)}°
 						</Text>
 						<Text style={styles.tempUnit}>
-							{tempUnit === "c" ? "celcius" : "fahrenheit"}
+							{tempUnit === "c" ? t("celsius") : t("fahrenheit")}
 						</Text>
 					</View>
 				</View>
@@ -113,7 +116,7 @@ const index = () => {
 						style={styles.tabItemContainer}
 					>
 						<ProductsIcon />
-						<Text style={styles.tabLabel}>PRODUCTS</Text>
+						<Text style={styles.tabLabel}>{t("products")}</Text>
 					</Pressable>
 					<Pressable
 						onPress={() => {
@@ -138,7 +141,7 @@ const index = () => {
 					</Pressable>
 					<View style={styles.tabItemContainer}>
 						<SettingsIcon />
-						<Text style={styles.tabLabel}>SETTINGS</Text>
+						<Text style={styles.tabLabel}>{t("settings")}</Text>
 					</View>
 				</View>
 			</SafeAreaView>

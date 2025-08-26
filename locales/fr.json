@@ -1,0 +1,83 @@
+{
+	"products": "Produits",
+	"settings": "Paramètres",
+	"current": "Actuel {{currentTempValue}}°",
+	"disconnected": "Déconnecté",
+	"connected": "Connecté",
+	"notConnected": "Non connecté",
+	"save": "Enregistrer",
+	"cancel": "Annuler",
+	"delete": "Supprimer",
+	"language": "Langue",
+	"getSupport": "Obtenir de l'aide",
+	"men": "Hommes",
+	"women": "Femmes",
+	"tempUnit": {
+		"title": "Unité de température",
+		"celsius": "Celsius",
+		"fahrenheit": "Fahrenheit"
+	},
+	"english": "Anglais",
+	"french": "Français",
+	"onboarding": {
+		"selectBrand": {
+			"title": "Sélectionnez la marque",
+			"p": "Parcourez en glissant pour choisir la marque que vous possédez et poursuivez le processus de configuration.",
+			"primaryButton": "Suivant",
+			"secondaryButton": "Retour aux produits connus"
+		},
+		"selectProduct": {
+			"title": "Sélectionnez le produit",
+			"p": "Parcourez les produits en glissant, choisissez le vôtre et passez à l'étape suivante.",
+			"primaryButton": "Rechercher",
+			"secondaryButton": "Changer de marque",
+			"notFound": "Aucun produit trouvé pour"
+		},
+		"search": {
+			"title": "Recherche de nouveaux produits",
+			"p": "Recherche de nouveaux produits à proximité. Cela ne prendra qu'un instant, aucune action nécessaire."
+		},
+		"deviceFound": {
+			"title": {
+				"single": "{{deviceCount}} nouveau produit trouvé",
+				"multiple": "{{deviceCount}} nouveaux produits trouvés"
+			},
+			"p": "Sélectionnez le produit que vous possédez parmi les options ci-dessous, puis confirmez votre choix.",
+			"primaryButton": "Appairer",
+			"secondaryButton": "Rechercher à nouveau"
+		},
+		"binding": {
+			"title": "Confirmer la connexion",
+			"p": "Appuyez sur le bouton de contrôle bleu clignotant de votre produit pour confirmer la connexion."
+		},
+		"success": {
+			"title": "Appairage réussi",
+			"p": "Votre produit est correctement appairé ! Appuyez sur le bouton ci-dessous pour y accéder et commencer à l'utiliser.",
+			"primaryButton": "Aller au produit",
+			"secondaryButton": "Appairer un autre produit"
+		},
+		"notFound": {
+			"title": "Aucun nouveau produit trouvé",
+			"p": "Si vous rencontrez des problèmes, suivez ces ",
+			"pBold": "étapes de dépannage",
+			"bullets": {
+				"1": "Assurez-vous que le Bluetooth est activé",
+				"2": "Débranchez la batterie de votre vêtement",
+				"3": "Rebranchez la batterie à votre vêtement",
+				"4": "Appuyez sur le bouton “Rechercher à nouveau” ci-dessous"
+			},
+			"primaryButton": "Rechercher à nouveau",
+			"secondaryButton": "Obtenir de l'aide"
+		}
+	},
+	"renameGarment": {
+		"label": "Renommer le produit",
+		"title": "Renommez votre produit",
+		"p": "Tapez un nom pour votre produit. Vous pouvez le changer à tout moment."
+	},
+	"deleteGarment": {
+		"label": "Oublier ce produit",
+		"title": "Supprimer {{productName}}",
+		"p": "Cette action supprimera définitivement l'appareil."
+	}
+}

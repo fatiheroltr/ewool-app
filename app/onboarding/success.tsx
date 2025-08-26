@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useTranslation } from "react-i18next";
 import {
 	Image,
 	Platform,
@@ -16,6 +17,8 @@ import TextButton from "../../components/ui/TextButton";
 import { brandsData } from "../utils/brandsData";
 
 export default function Success() {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
 
 	return (
@@ -23,8 +26,8 @@ export default function Success() {
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
 				<Header
-					title="Successfully paired"
-					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
+					title={t("onboarding.success.title")}
+					paragraph={t("onboarding.success.p")}
 					backButton={true}
 					steps={5}
 					currStep={5}
@@ -60,10 +63,15 @@ export default function Success() {
 							);
 						}}
 					>
-						<Text style={styles.buttonLabel}>Go to product</Text>
+						<Text style={styles.buttonLabel}>
+							{t("onboarding.success.primaryButton")}
+						</Text>
 						<NextIcon />
 					</TouchableOpacity>
-					<TextButton link="/onboarding" label="Pair another product" />
+					<TextButton
+						link="/onboarding"
+						label={t("onboarding.success.secondaryButton")}
+					/>
 				</View>
 			</SafeAreaView>
 			<ScreenBackground

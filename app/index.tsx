@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Image,
 	Linking,
@@ -32,6 +33,8 @@ import SupportIcon from "../assets/images/support-icon.svg";
 import { brandsData } from "./utils/brandsData";
 
 const products = () => {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const actionSheetRefs = useRef({});
 	const swipeListViewRef = useRef(null);
 	const [productToRename, setProductToRename] = useState(null);
@@ -127,8 +130,8 @@ const products = () => {
 				<Dialog.Container
 					visible={productToRename !== null && productToRename !== undefined}
 				>
-					<Dialog.Title>Rename this</Dialog.Title>
-					<Dialog.Description>rename paragraph</Dialog.Description>
+					<Dialog.Title>{t("renameGarment.title")}</Dialog.Title>
+					<Dialog.Description>{t("renameGarment.p")}</Dialog.Description>
 					<Dialog.Input
 						placeholder={
 							brandsData[knownDevices[productToRename]?.brandId]?.products?.[
@@ -140,14 +143,14 @@ const products = () => {
 						style={{ color: "black" }}
 					/>
 					<Dialog.Button
-						label="Cancel"
+						label={t("cancel")}
 						onPress={() => {
 							setProductToRename(null);
 							setNewProductName("");
 						}}
 					/>
 					<Dialog.Button
-						label="Save"
+						label={t("save")}
 						onPress={() => handleRenameDevice(productToRename, newProductName)}
 					/>
 				</Dialog.Container>
@@ -155,16 +158,14 @@ const products = () => {
 					visible={productToDelete !== null && productToDelete !== undefined}
 				>
 					<Dialog.Title>
-						Delete{" "}
-						{
-							brandsData[knownDevices[productToDelete]?.brandId]?.products?.[
-								knownDevices[productToDelete]?.productId
-							]?.name
-						}
+						{t("deleteGarment.title", {
+							productName:
+								brandsData[knownDevices[productToDelete]?.brandId]?.products?.[
+									knownDevices[productToDelete]?.productId
+								]?.name,
+						})}
 					</Dialog.Title>
-					<Dialog.Description>
-						This action will delete the device permanently!
-					</Dialog.Description>
+					<Dialog.Description>{t("deleteGarment.p")}</Dialog.Description>
 					<Dialog.Button
 						label="Cancel"
 						onPress={() => {
@@ -338,11 +339,11 @@ const products = () => {
 				<View style={styles.tabsContainer}>
 					<View style={styles.tabItemContainer}>
 						<ProductsIconSelected />
-						<Text style={styles.tabLabel}>PRODUCTS</Text>
+						<Text style={styles.tabLabel}>{t("products")}</Text>
 					</View>
 					<Pressable onPress={() => {}} style={styles.tabItemContainer}>
 						<SettingsIcon />
-						<Text style={styles.tabLabel}>SETTINGS</Text>
+						<Text style={styles.tabLabel}>{t("settings")}</Text>
 					</Pressable>
 				</View>
 			</SafeAreaView>

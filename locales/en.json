@@ -1,0 +1,83 @@
+{
+	"products": "Products",
+	"settings": "Settings",
+	"current": "Current {{currentTempValue}}°",
+	"disconnected": "Disconnected",
+	"connected": "Connected",
+	"notConnected": "Not connected",
+	"save": "Save",
+	"cancel": "Cancel",
+	"delete": "Delete",
+	"language": "Language",
+	"getSupport": "Get support",
+	"men": "Men",
+	"women": "Women",
+	"tempUnit": {
+		"title": "Temperature unit",
+		"celsius": "Celsius",
+		"fahrenheit": "Fahrenheit"
+	},
+	"english": "English",
+	"french": "French",
+	"onboarding": {
+		"selectBrand": {
+			"title": "Select the brand",
+			"p": "Browse by swiping to pick the brand you own and continue with the setup process.",
+			"primaryButton": "Next",
+			"secondaryButton": "Back to known products"
+		},
+		"selectProduct": {
+			"title": "Select the product",
+			"p": "Browse the products by swiping, choose yours, and move on to the next step.",
+			"primaryButton": "Search",
+			"secondaryButton": "Change the brand",
+			"notFound": "No products found for"
+		},
+		"search": {
+			"title": "Searching for new products",
+			"p": "Searching for new products nearby. This will only take a moment, no action needed."
+		},
+		"deviceFound": {
+			"title": {
+				"single": "{{deviceCount}} new product found",
+				"multiple": "{{deviceCount}} new products found"
+			},
+			"p": "Select the product you own from the options below, then confirm your selection.",
+			"primaryButton": "Pair",
+			"secondaryButton": "Search again"
+		},
+		"binding": {
+			"title": "Confirm the connection",
+			"p": "Press the blinking blue control button on your product to confirm your connection."
+		},
+		"success": {
+			"title": "Successfully paired",
+			"p": "Your product is successfully paired! Tap the button below to go to it and start using it.",
+			"primaryButton": "Go to product",
+			"secondaryButton": "Pair another product"
+		},
+		"notFound": {
+			"title": "No new products found",
+			"p": "If you’re experiencing issues, follow these steps.",
+			"bullets": {
+				"1": "Be sure your mobile device’s bluetooth is turned on",
+				"2": "Unplug the battery from your garment",
+				"3": "Plug the battery back to your garment",
+				"4": "Tap to “Search again” button below"
+			},
+			"paragraph": "If the problem persists, tap the support button below to get assistance.",
+			"primaryButton": "Search again",
+			"secondaryButton": "Get support"
+		}
+	},
+	"renameGarment": {
+		"label": "Rename the product",
+		"title": "Rename your product",
+		"p": "Type a name for your product. You can change it anytime."
+	},
+	"deleteGarment": {
+		"label": "Forgot this product",
+		"title": "Delete {{productName}}",
+		"p": "This action will delete the device pemanently."
+	}
+}

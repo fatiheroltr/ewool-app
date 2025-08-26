@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import CarouselSelector from "../../components/ui/CarouselSelector";
@@ -10,6 +11,8 @@ import TextButton from "../../components/ui/TextButton";
 import { brandsData } from "../utils/brandsData";
 
 export default function HomeScreen() {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const { devicesCount } = useLocalSearchParams();
 	const [selectedBrandId, setSelectedBrandId] = useState(null);
 
@@ -26,8 +29,8 @@ export default function HomeScreen() {
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
 				<Header
-					title="Select the brand"
-					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
+					title={t("onboarding.selectBrand.title")}
+					paragraph={t("onboarding.selectBrand.p")}
 					backButton={false}
 					steps={5}
 					currStep={1}
@@ -42,13 +45,13 @@ export default function HomeScreen() {
 				<View>
 					<PillButton
 						link={`/onboarding/productSelect?selectedBrandId=${selectedBrandId}&gender=men`}
-						label="Next"
+						label={t("onboarding.selectBrand.primaryButton")}
 						icon="arrow"
 						disabled={selectedBrandId === null}
 					/>
 					<TextButton
 						link="/"
-						label="Back to known products"
+						label={t("onboarding.selectBrand.secondaryButton")}
 						disabled={devicesCount === undefined ? false : true}
 					/>
 				</View>

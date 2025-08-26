@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Image,
 	Platform,
@@ -23,6 +24,8 @@ import TextButton from "../../components/ui/TextButton";
 import { brandsData } from "../utils/brandsData";
 
 export default function Found() {
+	const { i18n, t } = useTranslation();
+	const locale = i18n.language;
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
 	const [foundProductId, setFoundProductId] = useState(null);
 	const [showConfirm, setShowConfirm] = useState(false);
@@ -89,10 +92,16 @@ export default function Found() {
 			<SafeAreaView style={styles.safeView}>
 				<StatusBar style="light" />
 				<Header
-					title={`${foundDevicesLength} new product${
-						foundDevicesLength > 1 ? "s" : ""
-					} found`}
-					paragraph="Lorem ipsum dolor sit amet, consectetur adipis cing elit. Vivamus enim lectus."
+					title={`${
+						foundDevicesLength > 1
+							? t("onboarding.deviceFound.title.multiple", {
+									deviceCount: foundDevicesLength,
+							  })
+							: t("onboarding.deviceFound.title.single", {
+									deviceCount: foundDevicesLength,
+							  })
+					}`}
+					paragraph={t("onboarding.deviceFound.p")}
 					backButton={true}
 					steps={5}
 					currStep={4}
@@ -180,14 +189,14 @@ export default function Found() {
 				</View>
 				<View>
 					<PillButton
-						label="Pair"
+						label={t("onboarding.deviceFound.primaryButton")}
 						icon="pair"
 						disabled={foundProductId === null}
 						func={handleShowConfirm}
 					/>
 					<TextButton
 						link="/productSelect"
-						label="Search again"
+						label={t("onboarding.deviceFound.secondaryButton")}
 						direction="back"
 					/>
 				</View>
@@ -225,12 +234,10 @@ export default function Found() {
 									fontFamily: "FontBold",
 								}}
 							>
-								Confirm the connection
+								{t("onboarding.binding.title")}
 							</Text>
 							<Text style={{ fontSize: 14, fontFamily: "FontLight" }}>
-								Press the{" "}
-								<Text style={{ fontFamily: "FontMedium" }}>blinking blue</Text>{" "}
-								control button on your garment to confirm the connection
+								{t("onboarding.binding.p")}
 							</Text>
 						</View>
 						<View

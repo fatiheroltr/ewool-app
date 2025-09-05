@@ -81,6 +81,7 @@ const index = () => {
 					</View>
 				</View>
 				<RadialSlider
+					step={1}
 					key={triggerRender}
 					value={targetValue}
 					min={38}

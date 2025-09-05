@@ -8,7 +8,7 @@ import CarouselSelector from "../../components/ui/CarouselSelector";
 import Header from "../../components/ui/Header";
 import PillButton from "../../components/ui/PillButton";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../utils/brandsData";
+import brandsData from "../utils/brandsData";
 
 export default function HomeScreen() {
 	const { i18n, t } = useTranslation();

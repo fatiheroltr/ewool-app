@@ -27,10 +27,11 @@ import EditIcon2 from "../assets/images/edit-icon2.svg";
 import Logo from "../assets/images/ewool-logo.svg";
 import ProductsIconSelected from "../assets/images/products-icon-selected.svg";
 import DeleteIcon from "../assets/images/remove-icon.svg";
+import DeleteIcon2 from "../assets/images/remove-icon2.svg";
 import ScreenBackground from "../assets/images/screen-back.svg";
 import SettingsIcon from "../assets/images/settings-icon.svg";
 import SupportIcon from "../assets/images/support-icon.svg";
-import { brandsData } from "./utils/brandsData";
+import brandsData from "./utils/brandsData";
 
 const products = () => {
 	const { i18n, t } = useTranslation();
@@ -60,7 +61,7 @@ const products = () => {
 
 			return updated;
 		});
-
+		swipeListViewRef.current?.closeAllOpenRows();
 		setProductToRename(null);
 	};
 
@@ -145,13 +146,17 @@ const products = () => {
 					<Dialog.Button
 						label={t("cancel")}
 						onPress={() => {
+							swipeListViewRef.current?.closeAllOpenRows();
 							setProductToRename(null);
 							setNewProductName("");
 						}}
 					/>
 					<Dialog.Button
 						label={t("save")}
-						onPress={() => handleRenameDevice(productToRename, newProductName)}
+						onPress={() => {
+							swipeListViewRef.current?.closeAllOpenRows();
+							handleRenameDevice(productToRename, newProductName);
+						}}
 					/>
 				</Dialog.Container>
 				<Dialog.Container
@@ -169,12 +174,16 @@ const products = () => {
 					<Dialog.Button
 						label="Cancel"
 						onPress={() => {
+							swipeListViewRef.current?.closeAllOpenRows();
 							setProductToDelete(null);
 						}}
 					/>
 					<Dialog.Button
 						label="Delete"
-						onPress={() => handleDeleteDevice(productToDelete)}
+						onPress={() => {
+							swipeListViewRef.current?.closeAllOpenRows();
+							handleDeleteDevice(productToDelete);
+						}}
 					/>
 				</Dialog.Container>
 				<StatusBar style="light" />
@@ -198,6 +207,9 @@ const products = () => {
 					keyExtractor={(item, index) => index}
 					renderItem={(rowData, rowMap) => (
 						<Pressable
+							onLongPress={() => {
+								actionSheetRefs.current[rowData.index]?.show();
+							}}
 							onPress={() => {
 								rowData.item.connected &&
 									router.push(
@@ -302,38 +314,109 @@ const products = () => {
 						</Pressable>
 					)}
 					renderHiddenItem={(rowData, rowMap) => (
-						<Pressable
-							style={{
-								backgroundColor: "#A54941",
-								borderRadius: 8,
-								display: "flex",
-								flexDirection: "row",
-								alignItems: "center",
-								justifyContent: "flex-end",
-								height: 100,
-								width: 100,
-								alignSelf: "flex-end",
-							}}
+						<View
+							style={{ flexDirection: "row", justifyContent: "space-between" }}
 						>
-							<Pressable
-								onPress={() => {
-									actionSheetRefs.current[rowData.index]?.show();
-								}}
+							<View style={{ display: "flex", flexDirection: "row" }}>
+								<View
+									style={{
+										backgroundColor: "#7E7E7E",
+										borderTopLeftRadius: 8,
+										borderBottomLeftRadius: 8,
+										display: "flex",
+										flexDirection: "row",
+										alignItems: "center",
+										justifyContent: "flex-start",
+										height: 100,
+										width: 90,
+									}}
+								>
+									<Pressable
+										onPress={() => {
+											actionSheetRefs.current[rowData.index]?.show();
+											// setProductToRename(rowData.index);
+										}}
+										style={{
+											width: 80,
+											height: "100%",
+											display: "flex",
+											alignItems: "center",
+											justifyContent: "center",
+											flexDirection: "row",
+											gap: 3,
+										}}
+									>
+										<View style={styles.dot}></View>
+										<View style={styles.dot}></View>
+										<View style={styles.dot}></View>
+									</Pressable>
+								</View>
+								<View
+									style={{
+										backgroundColor: "#366F96",
+										borderTopLeftRadius: 8,
+										borderBottomLeftRadius: 8,
+										display: "flex",
+										flexDirection: "row",
+										alignItems: "center",
+										justifyContent: "flex-start",
+										height: 100,
+										width: 100,
+										transform: [{ translateX: -10 }],
+									}}
+								>
+									<Pressable
+										onPress={() => {
+											// actionSheetRefs.current[rowData.index]?.show();
+											setProductToRename(rowData.index);
+										}}
+										style={{
+											width: 80,
+											height: "100%",
+											display: "flex",
+											alignItems: "center",
+											justifyContent: "center",
+										}}
+									>
+										<EditIcon style={{ width: 20, height: 20 }} />
+									</Pressable>
+								</View>
+							</View>
+							<View
 								style={{
-									width: 80,
-									height: "100%",
+									backgroundColor: "#A54941",
+									borderRadius: 8,
 									display: "flex",
+									flexDirection: "row",
 									alignItems: "center",
-									justifyContent: "center",
+									justifyContent: "flex-end",
+									height: 100,
+									width: 100,
 								}}
 							>
-								<EditIcon />
-							</Pressable>
-						</Pressable>
+								<Pressable
+									onPress={() => {
+										// actionSheetRefs.current[rowData.index]?.show()
+										setProductToDelete(rowData.index);
+									}}
+									style={{
+										width: 80,
+										height: "100%",
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+									}}
+								>
+									<DeleteIcon2 style={{ width: 21, height: 21 }} />
+								</Pressable>
+							</View>
+						</View>
 					)}
 					rightOpenValue={-80}
+					leftOpenValue={160}
 					stopRightSwipe={-80}
-					disableRightSwipe={true}
+					stopLeftSwipe={160}
+					// disableRightSwipe={true}
 				/>
 
 				<View style={styles.tabsContainer}>
@@ -682,6 +765,13 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	dot: {
+		width: 5,
+		height: 5,
+		borderRadius: 9999,
+		backgroundColor: "#D9D9D9",
+		opacity: 0.8,
 	},
 });
 

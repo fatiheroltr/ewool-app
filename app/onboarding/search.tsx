@@ -15,7 +15,7 @@ import {
 import PairIcon from "../../assets/images/pair-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
-import { brandsData } from "../utils/brandsData";
+import brandsData from "../utils/brandsData";
 
 export default function Search() {
 	const { i18n, t } = useTranslation();

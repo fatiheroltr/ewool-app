@@ -14,7 +14,7 @@ import NextIcon from "../../assets/images/next-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
 import TextButton from "../../components/ui/TextButton";
-import { brandsData } from "../utils/brandsData";
+import brandsData from "../utils/brandsData";
 
 export default function Success() {
 	const { i18n, t } = useTranslation();

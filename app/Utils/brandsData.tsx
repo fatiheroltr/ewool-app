@@ -1,4 +1,4 @@
-export const brandsData = [
+const brandsData = [
 	{
 		name: "Sagney",
 		logoUrl: require("../../assets/images/sagney-logo.png"),
@@ -37,3 +37,5 @@ export const brandsData = [
 		logoUrl: require("../../assets/images/brand2-logo.png"),
 	},
 ];
+
+export default brandsData;

@@ -20,17 +20,16 @@ import {
 import ActionSheet from "react-native-actions-sheet";
 import Dialog from "react-native-dialog";
 import { SwipeListView } from "react-native-swipe-list-view";
-import AddIcon from "../assets/images/add-icon.svg";
+import AddProductIcon from "../assets/images/add-product-icon.svg";
 import BluetoothIcon from "../assets/images/bluetooth-icon.svg";
 import EditIcon from "../assets/images/edit-icon.svg";
 import EditIcon2 from "../assets/images/edit-icon2.svg";
 import Logo from "../assets/images/ewool-logo.svg";
-import ProductsIconSelected from "../assets/images/products-icon-selected.svg";
 import DeleteIcon from "../assets/images/remove-icon.svg";
 import DeleteIcon2 from "../assets/images/remove-icon2.svg";
 import ScreenBackground from "../assets/images/screen-back.svg";
-import SettingsIcon from "../assets/images/settings-icon.svg";
 import SupportIcon from "../assets/images/support-icon.svg";
+import Footer from "../components/ui/Footer";
 import brandsData from "./utils/brandsData";
 
 const products = () => {
@@ -123,8 +122,7 @@ const products = () => {
 				style={{
 					flex: 1,
 					flexDirection: "column",
-					alignContent: "center",
-					justifyContent: "space-between",
+					justifyContent: "center",
 					paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
 				}}
 			>
@@ -188,16 +186,16 @@ const products = () => {
 				</Dialog.Container>
 				<StatusBar style="light" />
 				<View style={styles.headerContainer}>
-					<View style={styles.headerButton}></View>
+					{/* <View style={styles.headerButton}></View> */}
 					<Logo style={{ width: 27, height: 33 }} />
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={styles.headerButton}
 						onPress={() => {
 							router.push("/onboarding");
 						}}
 					>
 						<AddIcon />
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 
 				<SwipeListView
@@ -238,7 +236,7 @@ const products = () => {
 							style={{
 								zIndex: 2,
 								backgroundColor: rowData.item.connected ? "#C6CACE" : "#93979D",
-								borderRadius: 8,
+								borderRadius: 7,
 								display: "flex",
 								flexDirection: "row",
 								alignItems: "center",
@@ -297,6 +295,35 @@ const products = () => {
 											]?.name
 										}
 									</Text>
+									<View
+										style={{
+											display: "flex",
+											flexDirection: "row",
+											alignItems: "center",
+											gap: 4,
+											marginTop: 8,
+										}}
+									>
+										<View
+											style={{
+												height: 6,
+												width: 6,
+												borderRadius: 9999,
+												backgroundColor: rowData.item.connected
+													? "#1b841e"
+													: "#D35547",
+											}}
+										></View>
+										<Text
+											style={{
+												fontSize: 8,
+												textTransform: "uppercase",
+												fontFamily: "FontMedium",
+											}}
+										>
+											{rowData.item.connected ? "Connected" : "Not connected"}
+										</Text>
+									</View>
 								</View>
 							</View>
 							<View
@@ -334,7 +361,6 @@ const products = () => {
 									<Pressable
 										onPress={() => {
 											actionSheetRefs.current[rowData.index]?.show();
-											// setProductToRename(rowData.index);
 										}}
 										style={{
 											width: 80,
@@ -367,7 +393,6 @@ const products = () => {
 								>
 									<Pressable
 										onPress={() => {
-											// actionSheetRefs.current[rowData.index]?.show();
 											setProductToRename(rowData.index);
 										}}
 										style={{
@@ -385,7 +410,7 @@ const products = () => {
 							<View
 								style={{
 									backgroundColor: "#A54941",
-									borderRadius: 8,
+									borderRadius: 7,
 									display: "flex",
 									flexDirection: "row",
 									alignItems: "center",
@@ -396,7 +421,6 @@ const products = () => {
 							>
 								<Pressable
 									onPress={() => {
-										// actionSheetRefs.current[rowData.index]?.show()
 										setProductToDelete(rowData.index);
 									}}
 									style={{
@@ -416,19 +440,29 @@ const products = () => {
 					leftOpenValue={160}
 					stopRightSwipe={-80}
 					stopLeftSwipe={160}
+					ListFooterComponent={() => (
+						<TouchableOpacity
+							onPress={() => {
+								router.push("/onboarding");
+							}}
+							style={{
+								borderColor: "#4E4D4D",
+								borderWidth: 1,
+								borderStyle: "dashed",
+								opacity: 1,
+								height: 97,
+								borderRadius: 7,
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<AddProductIcon />
+						</TouchableOpacity>
+					)}
 					// disableRightSwipe={true}
 				/>
-
-				<View style={styles.tabsContainer}>
-					<View style={styles.tabItemContainer}>
-						<ProductsIconSelected />
-						<Text style={styles.tabLabel}>{t("products")}</Text>
-					</View>
-					<Pressable onPress={() => {}} style={styles.tabItemContainer}>
-						<SettingsIcon />
-						<Text style={styles.tabLabel}>{t("settings")}</Text>
-					</Pressable>
-				</View>
+				<Footer products={true} settings={false} />
 			</SafeAreaView>
 			{knownDevices.map((device, index) => (
 				<View key={index}>
@@ -524,7 +558,7 @@ const products = () => {
 								style={{
 									display: "flex",
 									flexDirection: "row",
-									gap: 16,
+									gap: 12,
 									height: 36,
 									marginTop: 22,
 								}}
@@ -553,7 +587,7 @@ const products = () => {
 										flex: 1,
 										backgroundColor:
 											device.gender === "men" ? "#2E3B48" : "#EAECEF",
-										borderRadius: 10,
+										borderRadius: 7,
 										height: 36,
 										display: "flex",
 										alignItems: "center",
@@ -594,7 +628,7 @@ const products = () => {
 										flex: 1,
 										backgroundColor:
 											device.gender === "women" ? "#2E3B48" : "#EAECEF",
-										borderRadius: 10,
+										borderRadius: 7,
 										height: 36,
 										display: "flex",
 										alignItems: "center",
@@ -614,7 +648,7 @@ const products = () => {
 							<View
 								style={{
 									display: "flex",
-									gap: 16,
+									gap: 12,
 									marginTop: 36,
 									flexDirection: "row",
 									flexWrap: "wrap",
@@ -637,7 +671,7 @@ const products = () => {
 										justifyContent: "center",
 										gap: 10,
 										backgroundColor: "#EAECEF",
-										borderRadius: 10,
+										borderRadius: 7,
 									}}
 								>
 									<DeleteIcon />
@@ -658,7 +692,7 @@ const products = () => {
 										justifyContent: "center",
 										gap: 10,
 										backgroundColor: "#EAECEF",
-										borderRadius: 10,
+										borderRadius: 7,
 									}}
 								>
 									<EditIcon2 />
@@ -668,8 +702,8 @@ const products = () => {
 							<View
 								style={{
 									display: "flex",
-									gap: 16,
-									marginTop: 16,
+									gap: 12,
+									marginTop: 13,
 									flexDirection: "row",
 									flexWrap: "wrap",
 									justifyContent: "flex-start",
@@ -690,7 +724,7 @@ const products = () => {
 										justifyContent: "center",
 										gap: 10,
 										backgroundColor: "#EAECEF",
-										borderRadius: 10,
+										borderRadius: 7,
 									}}
 								>
 									<SupportIcon />
@@ -753,7 +787,7 @@ const styles = StyleSheet.create({
 	headerContainer: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "center",
 		alignItems: "center",
 		marginBottom: 24,
 		marginHorizontal: 26,

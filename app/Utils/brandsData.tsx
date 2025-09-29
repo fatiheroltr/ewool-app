@@ -1,7 +1,8 @@
 const brandsData = [
 	{
 		name: "Sagney",
-		logoUrl: require("../../assets/images/sagney-logo.png"),
+		onBoardLogoUrl: require("../../assets/images/sagney-logo-dark.png"),
+		deviceHeaderLogoUrl: require("../../assets/images/sagney-logo-white.png"),
 		products: [
 			{
 				name: "Puffer Jacket",
@@ -30,11 +31,11 @@ const brandsData = [
 	},
 	{
 		name: "Brand 2",
-		logoUrl: require("../../assets/images/brand1-logo.png"),
+		onBoardLogoUrl: require("../../assets/images/brand1-logo.png"),
 	},
 	{
 		name: "Brand 3",
-		logoUrl: require("../../assets/images/brand2-logo.png"),
+		onBoardLogoUrl: require("../../assets/images/brand2-logo.png"),
 	},
 ];
 

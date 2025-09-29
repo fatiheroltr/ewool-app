@@ -108,7 +108,6 @@ export default function Search() {
 						height: 100,
 						display: "flex",
 						justifyContent: "flex-start",
-						alignContent: "flex-start",
 					}}
 				>
 					<Text
@@ -151,6 +150,5 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		alignContent: "center",
 	},
 });

@@ -19,7 +19,7 @@ export default function HomeScreen() {
 	const brands = brandsData.map((brand, index) => {
 		return (
 			<View key={index + brand.name} style={styles.logoContainer}>
-				<Image style={styles.logo} source={brand.logoUrl} />
+				<Image style={styles.logo} source={brand.onBoardLogoUrl} />
 			</View>
 		);
 	});
@@ -39,7 +39,6 @@ export default function HomeScreen() {
 				<CarouselSelector
 					selectedState={selectedBrandId}
 					setSelectedState={setSelectedBrandId}
-					zoomOutScale={0.01}
 					data={brands}
 				/>
 				<View>
@@ -90,6 +89,5 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		alignContent: "center",
 	},
 });

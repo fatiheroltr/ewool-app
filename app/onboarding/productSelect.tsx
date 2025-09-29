@@ -44,6 +44,7 @@ export default function ProductSelect() {
 						flexDirection: "column",
 						gap: 24,
 						paddingTop: 6,
+						width: "100%",
 					}}
 				>
 					<Image
@@ -52,7 +53,7 @@ export default function ProductSelect() {
 							resizeMode: "contain",
 							marginBottom: 6,
 						}}
-						source={brandsData[selectedBrandId]?.logoUrl}
+						source={brandsData[selectedBrandId]?.onBoardLogoUrl}
 					/>
 					<Image
 						style={{ height: "63%", resizeMode: "contain" }}
@@ -87,7 +88,6 @@ export default function ProductSelect() {
 					<CarouselSelector
 						selectedState={selectedProductId}
 						setSelectedState={setSelectedProductId}
-						zoomOutScale={0.6}
 						data={productsData}
 					/>
 				) : (
@@ -149,6 +149,7 @@ export default function ProductSelect() {
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
+		overflow: "hidden",
 	},
 	safeView: {
 		flex: 1,
@@ -158,6 +159,5 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		alignContent: "center",
 	},
 });

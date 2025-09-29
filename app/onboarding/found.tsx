@@ -1,4 +1,3 @@
-import PillButton from "@/components/ui/PillButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -20,7 +19,6 @@ import BluetoothIcon from "../../assets/images/bluetooth-icon.svg";
 import CheckIcon from "../../assets/images/check-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import Header from "../../components/ui/Header";
-import TextButton from "../../components/ui/TextButton";
 import brandsData from "../utils/brandsData";
 
 export default function Found() {
@@ -113,6 +111,7 @@ export default function Found() {
 							foundProductId === null
 								? setFoundProductId(0)
 								: setFoundProductId(null);
+							handleShowConfirm();
 						}}
 						style={{
 							zIndex: 2,
@@ -187,7 +186,7 @@ export default function Found() {
 						</View>
 					</TouchableOpacity>
 				</View>
-				<View>
+				{/* <View>
 					<PillButton
 						label={t("onboarding.deviceFound.primaryButton")}
 						icon="pair"
@@ -199,7 +198,7 @@ export default function Found() {
 						label={t("onboarding.deviceFound.secondaryButton")}
 						direction="back"
 					/>
-				</View>
+				</View> */}
 			</SafeAreaView>
 			<ActionSheet
 				ref={actionSheetRef}
@@ -371,7 +370,6 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		alignContent: "center",
 	},
 	textContainer: {
 		width: "100%",

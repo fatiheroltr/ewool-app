@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	Image,
@@ -20,6 +21,40 @@ export default function Success() {
 	const { i18n, t } = useTranslation();
 	const locale = i18n.language;
 	const { selectedBrandId, selectedProductId, gender } = useLocalSearchParams();
+	const duration = 10;
+	const [timeLeft, setTimeLeft] = useState(duration);
+
+	useEffect(() => {
+		if (timeLeft === 0) {
+			router.push(
+				`/device/${selectedBrandId}?` +
+					`modelName=${encodeURIComponent(
+						brandsData[selectedBrandId].products[selectedProductId].name
+					)}&` +
+					`gender=${gender}&` +
+					`productImageUrl=${encodeURIComponent(
+						brandsData[selectedBrandId].products[selectedProductId]
+							.productImageUrl[gender]
+					)}&` +
+					`headerImageUrl=${encodeURIComponent(
+						brandsData[selectedBrandId].products[selectedProductId]
+							.headerImageUrl[gender]
+					)}&` +
+					`brand=${encodeURIComponent(brandsData[selectedBrandId].name)}`
+			);
+		}
+		const timer = setInterval(() => {
+			setTimeLeft((prev) => {
+				if (prev === 0) {
+					setTimeout(duration);
+					return 0;
+				}
+				return prev - 1;
+			});
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, [timeLeft]);
 
 	return (
 		<View style={styles.wrapper}>
@@ -65,6 +100,7 @@ export default function Success() {
 					>
 						<Text style={styles.buttonLabel}>
 							{t("onboarding.success.primaryButton")}
+							{`  (${timeLeft})`}
 						</Text>
 						<NextIcon />
 					</TouchableOpacity>
@@ -119,7 +155,6 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		alignContent: "center",
 	},
 	textContainer: {
 		width: "100%",

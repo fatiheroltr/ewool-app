@@ -29,7 +29,7 @@ export default function Success() {
 			router.push(
 				`/device/${selectedBrandId}?` +
 					`modelName=${encodeURIComponent(
-						brandsData[selectedBrandId].products[selectedProductId].name
+						brandsData[selectedBrandId].products[selectedProductId].name[locale]
 					)}&` +
 					`gender=${gender}&` +
 					`productImageUrl=${encodeURIComponent(
@@ -81,7 +81,8 @@ export default function Success() {
 							router.push(
 								`/device/${selectedBrandId}?` +
 									`modelName=${encodeURIComponent(
-										brandsData[selectedBrandId].products[selectedProductId].name
+										brandsData[selectedBrandId].products[selectedProductId]
+											.name[locale]
 									)}&` +
 									`gender=${gender}&` +
 									`productImageUrl=${encodeURIComponent(

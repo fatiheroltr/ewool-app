@@ -135,7 +135,7 @@ const products = () => {
 						placeholder={
 							brandsData[knownDevices[productToRename]?.brandId]?.products?.[
 								knownDevices[productToRename]?.productId
-							]?.name
+							]?.name[locale]
 						}
 						onChangeText={setNewProductName}
 						value={newProductName}
@@ -165,19 +165,19 @@ const products = () => {
 							productName:
 								brandsData[knownDevices[productToDelete]?.brandId]?.products?.[
 									knownDevices[productToDelete]?.productId
-								]?.name,
+								]?.name[locale],
 						})}
 					</Dialog.Title>
 					<Dialog.Description>{t("deleteGarment.p")}</Dialog.Description>
 					<Dialog.Button
-						label="Cancel"
+						label={t("cancel")}
 						onPress={() => {
 							swipeListViewRef.current?.closeAllOpenRows();
 							setProductToDelete(null);
 						}}
 					/>
 					<Dialog.Button
-						label="Delete"
+						label={t("delete")}
 						onPress={() => {
 							swipeListViewRef.current?.closeAllOpenRows();
 							handleDeleteDevice(productToDelete);
@@ -215,7 +215,7 @@ const products = () => {
 											`modelName=${encodeURIComponent(
 												brandsData[rowData.item.brandId].products[
 													rowData.item.productId
-												].name
+												].name[locale]
 											)}&` +
 											`gender=${rowData.item.gender}&` +
 											`productImageUrl=${encodeURIComponent(
@@ -292,7 +292,7 @@ const products = () => {
 										{
 											brandsData[rowData.item.brandId]?.products?.[
 												rowData.item.productId
-											]?.name
+											]?.name[locale]
 										}
 									</Text>
 									<View
@@ -321,7 +321,9 @@ const products = () => {
 												fontFamily: "FontMedium",
 											}}
 										>
-											{rowData.item.connected ? "Connected" : "Not connected"}
+											{rowData.item.connected
+												? t("connected")
+												: t("disconnected")}
 										</Text>
 									</View>
 								</View>
@@ -536,7 +538,7 @@ const products = () => {
 										>
 											{
 												brandsData[device.brandId]?.products?.[device.productId]
-													?.name
+													?.name[locale]
 											}
 										</Text>
 									</View>
@@ -601,7 +603,7 @@ const products = () => {
 											fontWeight: "bold",
 										}}
 									>
-										Men
+										{t("men")}
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
@@ -641,7 +643,7 @@ const products = () => {
 											textTransform: "capitalized",
 										}}
 									>
-										Women
+										{t("women")}
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -675,7 +677,9 @@ const products = () => {
 									}}
 								>
 									<DeleteIcon />
-									<Text style={{ fontSize: 13 }}>Forget this product</Text>
+									<Text style={{ fontSize: 13 }}>
+										{t("productEdit.delete")}
+									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									onPress={() => {
@@ -696,7 +700,9 @@ const products = () => {
 									}}
 								>
 									<EditIcon2 />
-									<Text style={{ fontSize: 13 }}>Rename the product</Text>
+									<Text style={{ fontSize: 13 }}>
+										{t("productEdit.rename")}
+									</Text>
 								</TouchableOpacity>
 							</View>
 							<View
@@ -713,7 +719,7 @@ const products = () => {
 								<TouchableOpacity
 									onPress={() =>
 										Linking.openURL(
-											brandsData[device.brandId]?.supportLink ?? ""
+											brandsData[device.brandId]?.supportLink[locale] ?? ""
 										)
 									}
 									style={{
@@ -728,7 +734,9 @@ const products = () => {
 									}}
 								>
 									<SupportIcon />
-									<Text style={{ fontSize: 13 }}>Get support</Text>
+									<Text style={{ fontSize: 13 }}>
+										{t("productEdit.getSupport")}
+									</Text>
 								</TouchableOpacity>
 
 								{/* this is a ghost child for grid look */}

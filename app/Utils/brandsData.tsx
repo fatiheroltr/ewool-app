@@ -5,7 +5,10 @@ const brandsData = [
 		deviceHeaderLogoUrl: require("../../assets/images/sagney-logo-white.png"),
 		products: [
 			{
-				name: "Puffer Jacket",
+				name: {
+					en: "Puffer Jacket",
+					fr: "Puffer Jacket(fr)",
+				},
 				productImageUrl: {
 					men: require("../../assets/images/sagney-puffer-jacket-men.png"),
 					women: require("../../assets/images/sagney-puffer-jacket-women.png"),
@@ -16,7 +19,10 @@ const brandsData = [
 				},
 			},
 			{
-				name: "Puffer Vest",
+				name: {
+					en: "Puffer Vest",
+					fr: "Puffer Vest(fr)",
+				},
 				productImageUrl: {
 					men: require("../../assets/images/sagney-puffer-jacket-men.png"),
 					women: require("../../assets/images/sagney-puffer-jacket-women.png"),
@@ -27,7 +33,10 @@ const brandsData = [
 				},
 			},
 		],
-		supportLink: "https://www.google.com",
+		supportLink: {
+			en: "https://ewool.com/support",
+			fr: "https://ewool.com/fr-CA/assistance",
+		},
 	},
 	{
 		name: "Brand 2",

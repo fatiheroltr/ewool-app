@@ -66,7 +66,7 @@ export default function ProductSelect() {
 							fontFamily: "FontRegular",
 						}}
 					>
-						{product.name}
+						{product.name[locale]}
 					</Text>
 				</View>
 			);

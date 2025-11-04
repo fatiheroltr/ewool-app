@@ -79,5 +79,14 @@
 		"label": "Forgot this product",
 		"title": "Delete {{productName}}",
 		"p": "This action will delete the device pemanently."
+	},
+	"for": "for",
+	"productEdit": {
+		"model": "Model",
+		"delete": "Forget this product",
+		"rename": "Rename the product",
+		"getSupport": "Get support",
+		"men": "Men",
+		"women": "Women"
 	}
 }

@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,19 +15,29 @@ import SettingsIcon from "../../assets/images/settings-icon.svg";
 
 const Footer = ({ products, settings }) => {
 	const { t } = useTranslation();
+	const pathname = usePathname();
 
 	return (
 		<View style={styles.tabsContainer}>
 			<TouchableOpacity
 				style={styles.tabItemContainer}
 				onPress={() => {
-					router.push("/");
+					if (pathname !== "/") {
+						router.push("/");
+					}
 				}}
 			>
 				{products ? <ProductsIconSelected /> : <ProductsIcon />}
 				<Text style={styles.tabLabel}>{t("products")}</Text>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => {}} style={styles.tabItemContainer}>
+			<TouchableOpacity
+				onPress={() => {
+					if (pathname !== "/settings") {
+						router.push("/settings");
+					}
+				}}
+				style={styles.tabItemContainer}
+			>
 				{settings ? <SettingsIconSelected /> : <SettingsIcon />}
 				<Text style={styles.tabLabel}>{t("settings")}</Text>
 			</TouchableOpacity>

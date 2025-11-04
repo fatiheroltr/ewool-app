@@ -168,7 +168,7 @@ export default function Found() {
 								>
 									{
 										brandsData[selectedBrandId]?.products[selectedProductId]
-											.name
+											.name[locale]
 									}
 								</Text>
 							</View>

@@ -79,5 +79,14 @@
 		"label": "Oublier ce produit",
 		"title": "Supprimer {{productName}}",
 		"p": "Cette action supprimera définitivement l'appareil."
+	},
+	"for": "pour",
+	"productEdit": {
+		"model": "Modèle",
+		"delete": "Oublier ce produit",
+		"rename": "Renommer le produit",
+		"getSupport": "Assistance",
+		"men": "Homme",
+		"women": "Femme"
 	}
 }

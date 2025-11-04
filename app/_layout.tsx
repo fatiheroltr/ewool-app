@@ -2,41 +2,51 @@ import "@/i18n";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TextInput } from "react-native";
 import "react-native-reanimated";
 import Splash from "../components/Splash";
-
-SplashScreen.preventAutoHideAsync();
+import { TempUnitContextProvider } from "./context/TempUnitContext";
 
 export default function RootLayout() {
-	const [appReady, setAppReady] = useState(false);
-	const [fontsLoaded, error] = useFonts({
+	const [fontsLoaded, fontError] = useFonts({
 		FontRegular: require("../assets/fonts/DINNextRoundedLTPro-Regular.otf"),
 		FontBold: require("../assets/fonts/DINNextRoundedLTPro-Bold.otf"),
 		FontMedium: require("../assets/fonts/DINNextRoundedLTPro-Medium.otf"),
 		FontLight: require("../assets/fonts/DINNextRoundedLTPro-Light.otf"),
 	});
 
-	useEffect(() => {
-		if (error) throw error;
+	const [appReady, setAppReady] = useState(false);
 
-		if (fontsLoaded) {
-			setAppReady(true);
-			SplashScreen.hideAsync();
+	useEffect(() => {
+		async function prepare() {
+			try {
+				await SplashScreen.preventAutoHideAsync();
+				if (fontError) throw fontError;
+				if (fontsLoaded) {
+					setAppReady(true);
+					await SplashScreen.hideAsync();
+				}
+			} catch (e) {
+				console.warn(e);
+			}
 		}
-	}, [fontsLoaded, error]);
+		prepare();
+	}, [fontsLoaded, fontError]);
+
+	// Disable font scaling globally
+	Text.defaultProps = Text.defaultProps || {};
+	Text.defaultProps.allowFontScaling = false;
+	TextInput.defaultProps = TextInput.defaultProps || {};
+	TextInput.defaultProps.allowFontScaling = false;
 
 	if (!appReady) {
 		return <Splash />;
 	}
 
-	// Disable font scaling globally
-	Text.defaultProps = Text.defaultProps || {};
-	Text.defaultProps.allowFontScaling = false;
-
-	TextInput.defaultProps = TextInput.defaultProps || {};
-	TextInput.defaultProps.allowFontScaling = false;
-
-	return <Slot />;
+	return (
+		<TempUnitContextProvider>
+			<Slot />
+		</TempUnitContextProvider>
+	);
 }

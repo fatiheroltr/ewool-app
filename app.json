@@ -8,6 +8,11 @@
 		"scheme": "heatedbyewool",
 		"deeplinks": true,
 		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/images/splash-screen.jpg",
+			"resizeMode": "contain",
+			"backgroundColor": "#000000"
+		},
 		"newArchEnabled": true,
 		"ios": {
 			"supportsTablet": true,
@@ -26,18 +31,7 @@
 			"output": "static",
 			"favicon": "./assets/images/favicon.png"
 		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-splash-screen",
-				{
-					"image": "./assets/images/splash-icon.png",
-					"resizeMode": "contain",
-					"backgroundColor": "#000000"
-				}
-			],
-			"expo-localization"
-		],
+		"plugins": ["expo-router", "expo-localization"],
 		"experiments": {
 			"typedRoutes": true
 		}

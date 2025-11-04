@@ -1,7 +1,7 @@
 import Footer from "@/components/ui/Footer";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	Animated,
@@ -23,6 +23,7 @@ import OffIcon from "../../assets/images/off-icon.svg";
 import OnIcon from "../../assets/images/on-icon.svg";
 import ScreenBackground from "../../assets/images/screen-back.svg";
 import CircularSlider from "../../components/ui/CircularSlider";
+import { TempUnitContext } from "../context/TempUnitContext";
 import brandsData from "../utils/brandsData";
 
 const index = () => {
@@ -31,7 +32,7 @@ const index = () => {
 	const router = useRouter();
 	const { id, modelName, headerImageUrl, gender, brand } =
 		useLocalSearchParams();
-	let tempUnit = "c";
+	const { currentTempUnit, setCurrentTempUnit } = useContext(TempUnitContext);
 	let min = 38;
 	let max = 55;
 	const { width } = Dimensions.get("window");
@@ -126,7 +127,7 @@ const index = () => {
 	};
 
 	const checkUnit = (number) => {
-		if (tempUnit === "c") return number;
+		if (currentTempUnit === "celsius") return number;
 		else return (number * 9) / 5 + 32;
 	};
 
@@ -171,8 +172,10 @@ const index = () => {
 						/>
 					</View>
 					<View style={styles.productNameContainer}>
-						<Text style={styles.modelName}>{gender}'s</Text>
 						<Text style={styles.modelName}>{modelName}</Text>
+						<Text style={styles.modelName}>
+							{t("for")} {t(gender)}
+						</Text>
 					</View>
 				</View>
 				<View style={styles.productImageContainer}>
@@ -238,7 +241,6 @@ const index = () => {
 						progressColor="#A54940"
 						gradientColors={["#D3B047", "#D38B47", "#D35547"]}
 						padding={10}
-						// thumbImage={require("../../assets/images/thumb.png")}
 					/>
 				</View>
 				{/* blocking the drag action on the center */}
@@ -311,7 +313,9 @@ const index = () => {
 									{Math.round(checkUnit(targetValue))}°
 								</Text>
 								<Text style={styles.tempUnit}>
-									{tempUnit === "c" ? t("celsius") : t("fahrenheit")}
+									{currentTempUnit === "celsius"
+										? t("celsius")
+										: t("fahrenheit")}
 								</Text>
 							</View>
 						</Animated.View>

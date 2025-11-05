@@ -17,6 +17,7 @@ const brandsData = [
 					men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
 					women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
 				},
+				confirmImageUrl: require("../../assets/images/confirm-button.jpg"),
 			},
 			{
 				name: {
@@ -31,6 +32,7 @@ const brandsData = [
 					men: require("../../assets/images/sagney-vest-men.png"),
 					women: require("../../assets/images/sagney-vest-women.png"),
 				},
+				confirmImageUrl: require("../../assets/images/confirm-button.jpg"),
 			},
 			{
 				name: {
@@ -45,6 +47,7 @@ const brandsData = [
 					men: require("../../assets/images/sagney-short-model-men.png"),
 					women: require("../../assets/images/sagney-short-model-women.png"),
 				},
+				confirmImageUrl: require("../../assets/images/confirm-button-short.jpg"),
 			},
 		],
 		supportLink: {

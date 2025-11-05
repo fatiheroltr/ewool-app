@@ -312,7 +312,10 @@ export default function Found() {
 						>
 							<Image
 								style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-								source={require("../../assets/images/confirm-button.jpg")}
+								source={
+									brandsData[selectedBrandId]?.products[selectedProductId]
+										.confirmImageUrl
+								}
 							/>
 						</Pressable>
 					</View>

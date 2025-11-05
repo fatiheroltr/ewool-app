@@ -299,7 +299,7 @@ const products = () => {
 										style={{
 											display: "flex",
 											flexDirection: "row",
-											alignItems: "center",
+											alignContent: "center",
 											gap: 4,
 											marginTop: 8,
 										}}

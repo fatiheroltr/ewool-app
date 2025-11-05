@@ -160,6 +160,7 @@ const index = () => {
 								width: 1,
 								borderWidth: 1,
 								borderColor: "#d4d4d4",
+								backgroundColor: "#d4d4d4",
 								height: "100%",
 								opacity: 0.8,
 							}}

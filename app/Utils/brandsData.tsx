@@ -6,8 +6,8 @@ const brandsData = [
 		products: [
 			{
 				name: {
-					en: "Puffer Jacket",
-					fr: "Puffer Jacket(fr)",
+					en: "Heated jacket",
+					fr: "Manteau chauffant",
 				},
 				productImageUrl: {
 					men: require("../../assets/images/sagney-puffer-jacket-men.png"),
@@ -20,16 +20,30 @@ const brandsData = [
 			},
 			{
 				name: {
-					en: "Puffer Vest",
-					fr: "Puffer Vest(fr)",
+					en: "Heated vest",
+					fr: "Veste chauffante",
 				},
 				productImageUrl: {
-					men: require("../../assets/images/sagney-puffer-jacket-men.png"),
-					women: require("../../assets/images/sagney-puffer-jacket-women.png"),
+					men: require("../../assets/images/sagney-vest.png"),
+					women: require("../../assets/images/sagney-vest.png"),
 				},
 				headerImageUrl: {
-					men: require("../../assets/images/heatlover-puffer-jacket-model-men.png"),
-					women: require("../../assets/images/heatlover-puffer-jacket-model-women.png"),
+					men: require("../../assets/images/sagney-vest-men.png"),
+					women: require("../../assets/images/sagney-vest-women.png"),
+				},
+			},
+			{
+				name: {
+					en: "Heated short",
+					fr: "Short chauffant",
+				},
+				productImageUrl: {
+					men: require("../../assets/images/sagney-short-men.png"),
+					women: require("../../assets/images/sagney-short-women.png"),
+				},
+				headerImageUrl: {
+					men: require("../../assets/images/sagney-short-model-men.png"),
+					women: require("../../assets/images/sagney-short-model-women.png"),
 				},
 			},
 		],
@@ -37,14 +51,6 @@ const brandsData = [
 			en: "https://ewool.com/support",
 			fr: "https://ewool.com/fr-CA/assistance",
 		},
-	},
-	{
-		name: "Brand 2",
-		onBoardLogoUrl: require("../../assets/images/brand1-logo.png"),
-	},
-	{
-		name: "Brand 3",
-		onBoardLogoUrl: require("../../assets/images/brand2-logo.png"),
 	},
 ];
 

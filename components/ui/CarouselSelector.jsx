@@ -25,7 +25,7 @@ export default function CarouselSelector({
 				style={{
 					overflow: "visible",
 				}}
-				loop={true}
+				loop={false}
 				autoPlay={false}
 				data={data}
 				scrollAnimationDuration={300}

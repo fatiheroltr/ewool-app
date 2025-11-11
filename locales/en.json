@@ -59,11 +59,13 @@
 		"notFound": {
 			"title": "No new products found",
 			"p": "If you’re experiencing issues, follow these steps.",
+			"trouble": "Troubleshooting",
 			"bullets": {
 				"1": "Be sure your mobile device’s bluetooth is turned on",
 				"2": "Unplug the battery from your garment",
 				"3": "Plug the battery back to your garment",
-				"4": "Tap to “Search again” button below"
+				"4": "Short press to control button on the heated product",
+				"5": "Tap \"Search again\" button below"
 			},
 			"paragraph": "If the problem persists, tap the support button below to get assistance.",
 			"primaryButton": "Search again",

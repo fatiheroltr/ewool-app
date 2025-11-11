@@ -1,15 +1,19 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export default function Stepper({ steps, currStep }) {
+export default function Stepper({ steps, currStep, errorStep }) {
 	return (
 		<View style={styles.stepsContainer}>
-			{Array.from({ length: steps }).map((step, index) => (
-				<View
-					key={index}
-					style={index + 1 <= currStep ? styles.stepActive : styles.step}
-				/>
-			))}
+			{Array.from({ length: steps }).map((step, index) =>
+				index + 1 === currStep && errorStep ? (
+					<View key={index} style={styles.error} />
+				) : (
+					<View
+						key={index}
+						style={index + 1 <= currStep ? styles.stepActive : styles.step}
+					/>
+				)
+			)}
 		</View>
 	);
 }
@@ -35,6 +39,13 @@ const styles = StyleSheet.create({
 		height: 2,
 		flex: 1,
 		backgroundColor: "#D9D9D9",
+		opacity: 1,
+		borderRadius: 9999,
+	},
+	error: {
+		backgroundColor: "#EE5340",
+		height: 2,
+		flex: 1,
 		opacity: 1,
 		borderRadius: 9999,
 	},

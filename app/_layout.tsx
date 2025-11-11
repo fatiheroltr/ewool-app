@@ -1,6 +1,7 @@
 import "@/i18n";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
+
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useState } from "react";
 import { Text, TextInput } from "react-native";

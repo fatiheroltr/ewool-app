@@ -58,14 +58,16 @@
 		},
 		"notFound": {
 			"title": "Aucun nouveau produit trouvé",
-			"p": "Si vous rencontrez des problèmes, suivez ces ",
-			"pBold": "étapes de dépannage",
+			"p": "Si vous rencontrez des problèmes, suivez ces étapes.",
+			"trouble": "Dépannage",
 			"bullets": {
-				"1": "Assurez-vous que le Bluetooth est activé",
+				"1": "Assurez-vous que le Bluetooth de votre appareil mobile est activé",
 				"2": "Débranchez la batterie de votre vêtement",
 				"3": "Rebranchez la batterie à votre vêtement",
-				"4": "Appuyez sur le bouton “Rechercher à nouveau” ci-dessous"
+				"4": "Appuyez brièvement sur le bouton de contrôle du produit chauffant",
+				"5": "Appuyez sur le bouton « Rechercher à nouveau » ci-dessous"
 			},
+			"paragraph": "Si le problème persiste, appuyez sur le bouton d’assistance ci-dessous pour obtenir de l’aide.",
 			"primaryButton": "Rechercher à nouveau",
 			"secondaryButton": "Obtenir de l'aide"
 		}

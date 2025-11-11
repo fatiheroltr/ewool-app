@@ -12,6 +12,7 @@ export default function Header({
 	paragraph,
 	steps,
 	currStep,
+	errorStep,
 }) {
 	return (
 		<View style={styles.headerWrapper}>
@@ -36,7 +37,7 @@ export default function Header({
 				<Text style={styles.title}>{title}</Text>
 				<Text style={styles.paragraph}>{paragraph}</Text>
 			</View>
-			<Stepper steps={steps} currStep={currStep} />
+			<Stepper steps={steps} currStep={currStep} errorStep={errorStep} />
 		</View>
 	);
 }
